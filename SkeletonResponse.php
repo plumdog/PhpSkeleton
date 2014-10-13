@@ -39,6 +39,8 @@ class SkeletonResponse {
 				throw new \Exception("Invalid view path: '".$view."'");
 			}
 
+		} else {
+			$this->_view = NULL;
 		}
 	}
 
