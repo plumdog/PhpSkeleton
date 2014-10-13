@@ -25,10 +25,12 @@ class SkeletonHandler {
 			$response = $handler->handle($request);
 		}
 
+		$out = (string) $response;
+
 		foreach($response->headers() as $header) {
 			header($header);
 		}
 
-		echo $response;
+		echo $out;
 	}
 }
