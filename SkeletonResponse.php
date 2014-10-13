@@ -7,6 +7,7 @@ class SkeletonResponse {
 	 * @param SkeletonRequest $request	the request that triggered this respons
 	 * @param mixed $data			the data to be returned (more on this below)
 	 * @param string $view			the view name to use for rendering
+	 * @param boolean $inherit_template	if we are using a view, should it inherit from the template?
 	 *
 	 * If $view is not set, then we just output $data as a
 	 * string. This means that if you want to output something
@@ -22,10 +23,11 @@ class SkeletonResponse {
 	 * <?php include $SKELETON_VIEW; ?>
 	 * which will output the inner view.
 	 */
-	public function __construct($request, $data, $view=NULL) {
+	public function __construct($request, $data, $view=NULL, $inherit_template=TRUE) {
 		$this->_data = $data;
 		$this->_request = $request;
 		$this->_headers = array();
+		$this->_inherit_template = $inherit_template;
 
 		if($view !== NULL) {
 			// For safety, if there are any dots in the
@@ -45,12 +47,16 @@ class SkeletonResponse {
 	}
 
 	public function __toString() {
-		ob_start();
+
 		if($this->_view === NULL) {
-			$this->_headers[] = "Content-Type: text/plain";
+			$this->_headers[] = "Content-Type:text/plain";
 			return (string) $this->_data;
 		} else {
-			// I guess this would break things
+
+			$this->_headers[] = 'HTTP/1.1 200 OK';
+
+			// I guess this would break things.
+			// (That works on two levels)
 			unset($this->_data['this']);
 			// dirty but it works
 			extract($this->_data);
@@ -58,17 +64,24 @@ class SkeletonResponse {
 			if(!isset($title) and isset($this->_request->_config['TITLE'])) {
 				$title = $this->_request->_config['TITLE'];
 			}
-			$SKELETON_VIEW = $this->_view;
-			$VIEW_DIR = $this->_request->_view_dir();
 
-			include $VIEW_DIR.'/template.html';
+			if($this->_inherit_template) {
+				$SKELETON_VIEW = $this->_view;
+				$VIEW_DIR = $this->_request->_view_dir();
+
+				ob_start();
+				include $VIEW_DIR.'/template.html';
+				$out = ob_get_contents();
+				ob_end_clean();
+			} else {
+				ob_start();
+				include $this->_view;
+				$out = ob_get_contents();
+				ob_end_clean();
+			}
+
+			return $out;
 		}
-
-		$this->_headers[] = 'HTTP/1.1 200 OK';
-
-		$out = ob_get_contents();
-		ob_end_clean();
-		return $out;
 	}
 
 	public function headers() {
