@@ -1,5 +1,5 @@
 <?php
-namespace PhpSkeleton;
+namespace Skeleton;
 
 /**
  * Base class for all request handlers.

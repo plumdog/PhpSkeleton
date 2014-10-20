@@ -1,5 +1,5 @@
 <?php
-namespace PhpSkeleton;
+namespace Skeleton;
 
 /**
  * Request class to bundle up some common functionality

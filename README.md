@@ -9,7 +9,7 @@ if(strpos($_SERVER['REQUEST_URI'], '/static') === 0) {
 }
 
 require_once("vendor/autoload.php");
-use PhpSkeleton\SkeletonHandler;
+use Skeleton\SkeletonHandler;
 
 $routes = array(
 	'/' => 'MyApp\Index',
@@ -32,8 +32,8 @@ Simple Example
 ```php
 <?php
 namespace MyApp;
-use PhpSkeleton\SkeletonRequestHandler as SkeletonRequestHandler;
-use PhpSkeleton\SkeletonResponse as SkeletonResponse;
+use Skeleton\SkeletonRequestHandler as SkeletonRequestHandler;
+use Skeleton\SkeletonResponse as SkeletonResponse;
 
 class Index extends SkeletonRequestHandler {
 	public function handle($request) {
@@ -49,8 +49,8 @@ More Complex Example
 ```php
 <?php
 namespace MyApp;
-use PhpSkeleton\SkeletonRequestHandler as SkeletonRequestHandler;
-use PhpSkeleton\SkeletonResponse as SkeletonResponse;
+use Skeleton\SkeletonRequestHandler as SkeletonRequestHandler;
+use Skeleton\SkeletonResponse as SkeletonResponse;
 
 class Edit extends SkeletonRequestHandler {
 	public function handle($request) {
@@ -127,8 +127,8 @@ as the 2nd argument will just be echo-ed out. Eg:
 ```php
 <?php
 namespace MyApp;
-use PhpSkeleton\SkeletonRequestHandler as SkeletonRequestHandler;
-use PhpSkeleton\SkeletonResponse as SkeletonResponse;
+use Skeleton\SkeletonRequestHandler as SkeletonRequestHandler;
+use Skeleton\SkeletonResponse as SkeletonResponse;
 
 class API extends SkeletonRequestHandler {
 	public function handle($request) {

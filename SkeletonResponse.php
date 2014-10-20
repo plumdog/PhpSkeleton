@@ -1,5 +1,5 @@
 <?php
-namespace PhpSkeleton;
+namespace Skeleton;
 
 class SkeletonResponse {
 	/**
